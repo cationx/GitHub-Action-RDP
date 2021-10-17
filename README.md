@@ -2,8 +2,9 @@
 Remote operational GitHub Actions VM for debugging, etc..
 
 ## Available VMs
-* Windows Server 2019
-* Windows Server 2016
+* Windows Server 2019 (Windows 10)
+* Windows Server 2016 (Windows #)
+* Windows Server 2022 (Windows 11)
 
 ## Usage
 ### First use
@@ -40,3 +41,4 @@ ex. Name: NGROK_AUTH_TOKEN | value: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ## Credits
 * Windows Server VMs file: https://github.com/avgchamara/WindowsRDP
+* adding windows 11: https://github.com/omxpro
