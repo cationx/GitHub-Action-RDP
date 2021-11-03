@@ -41,4 +41,4 @@ ex. Name: NGROK_AUTH_TOKEN | value: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ## Credits
 * Windows Server VMs file: https://github.com/avgchamara/WindowsRDP
-* adding windows 11: https://github.com/omxpro
+* Adding windows 11 and cleaimg files and making this repo work again: https://github.com/anonymouslyhacking123/GitHub-Action-RDP/
