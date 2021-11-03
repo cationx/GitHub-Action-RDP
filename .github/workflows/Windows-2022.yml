@@ -1,0 +1,36 @@
+name: Windows Server 2022
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: windows-2022
+    timeout-minutes: 9999
+
+    steps:
+    - name: Download files.
+      run: |
+        Invoke-WebRequest https://github.com/r3xzt/GitHub-Action-RDP/raw/main/Windows/ngrok.exe -OutFile ngrok.exe
+        Invoke-WebRequest https://github.com/r3xzt/GitHub-Action-RDP/raw/main/Windows/NGROK-AP.bat -OutFile NGROK-AP.bat
+        Invoke-WebRequest https://github.com/r3xzt/GitHub-Action-RDP/raw/main/Windows/user-create.bat -OutFile user-create.bat
+        Invoke-WebRequest https://github.com/r3xzt/GitHub-Action-RDP/raw/main/Windows/info.bat -OutFile info.bat
+        Invoke-WebRequest https://github.com/r3xzt/GitHub-Action-RDP/raw/main/Windows/loop.bat -OutFile loop.bat
+    - name: Connect your NGROK account.
+      run: | 
+        .\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+    - name: Enable RDP Access.
+      run: | 
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+    - name: Create Tunnel.
+      run: Start-Process -FilePath ".\ngrok.exe" -ArgumentList "tcp 3389 -region ${{ secrets.NGROK_REGION }}"
+    - name: Create user account.
+      run: cmd /c user-create.bat
+    - name: VM Info.
+      run: cmd /c info.bat
+    - name: Keep your VM alive.
+      run: cmd /c loop.bat
